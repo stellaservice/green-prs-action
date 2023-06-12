@@ -1,0 +1,23 @@
+name: 'Green PRs'
+description: 'Finds workflow runs related to pull requests and re-runs failed jobs'
+inputs:
+  workflow:
+    description: 'The workflow ID or name of workflow file. See: https://octokit.github.io/rest.js/v19#actions-list-workflow-runs'
+    required: true
+  pr_title_filter_pattern:
+    description: 'Regex pattern to filter PRs by title'
+    required: false
+  pr_base_branch:
+    description: 'Base branch of pull-request to filter for'
+    required: false
+    defualt: master
+  max_attempts:
+    description: 'The maximum amount of run attempts to be tried'
+    required: false
+    default: 3
+  github_token:
+    description: Personal access token (PAT) used to call into GitHub's REST API.
+    default: ${{ github.token }}
+runs:
+  using: 'node18'
+  main: 'index.js'

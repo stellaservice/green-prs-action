@@ -1,0 +1,8 @@
+{
+  "name": "green-prs-action",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@octokit/rest": "^19.0.11"
+  }
+}
