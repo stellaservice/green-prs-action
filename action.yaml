@@ -19,5 +19,5 @@ inputs:
     description: Personal access token (PAT) used to call into GitHub's REST API.
     default: ${{ github.token }}
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'index.js'
