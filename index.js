@@ -39,6 +39,10 @@ const main = async () => {
     const max_attempts = core.getInput('max_attempts')
     const workflow_id = core.getInput('workflow')
     const pr_match_filter = new RegExp(core.getInput('pr_title_filter_pattern'))
+    const pr_label_selector = core.getInput('pr_label_selector')
+      .split(',')
+      .map(l => l.trim())
+      .filter(Boolean)
 
     const octokit = new Octokit ({ baseUrl: apiUrl, auth: token })
 
@@ -48,6 +52,13 @@ const main = async () => {
       pull_requests = pull_requests.filter((pr) => (
         !!pr.title.match(pr_match_filter)
       ))
+    }
+
+    if (pr_label_selector.length > 0) {
+      pull_requests = pull_requests.filter((pr) => {
+        const prLabels = pr.labels.map(l => l.name)
+        return pr_label_selector.some(label => prLabels.includes(label))
+      })
     }
 
     for(const pr of pull_requests) {
