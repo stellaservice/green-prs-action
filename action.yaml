@@ -7,6 +7,9 @@ inputs:
   pr_title_filter_pattern:
     description: 'Regex pattern to filter PRs by title'
     required: false
+  pr_label_selector:
+    description: 'Comma-separated list of labels to select PRs by (e.g. "bug, needs-rerun"). PRs matching any of the specified labels will be included.'
+    required: false
   pr_base_branch:
     description: 'Base branch of pull-request to filter for'
     required: false
