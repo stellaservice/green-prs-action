@@ -70,11 +70,17 @@ const main = async () => {
         head_sha: pr.head.sha
       });
 
-      if (runs.length === 0) { break; }
+      if (runs.data.workflow_runs.length === 0) { break; }
 
-      const state = runs.data.workflow_runs[0].conclusion
-      const attempts = runs.data.workflow_runs[0].run_attempt
-      const run_id = runs.data.workflow_runs[0].id
+      const latestRun = runs.data.workflow_runs[0];
+      const state = latestRun.conclusion
+      const attempts = latestRun.run_attempt
+      const run_id = latestRun.id
+
+      if (state === null) {
+        console.log(`Conclusion is null for run ID: ${run_id}, skipping`);
+        continue;
+      }
 
       if (state === "failure" && attempts < max_attempts) {
         console.log(`Triggering re-run for ID: ${run_id}`);
